@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - CG_ENVIRONMENT=development
+      - CG_DATABASE_URL=/data/compliance_graph.db
+    volumes:
+      - ./data:/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - ./otel-collector.yml:/etc/otel/config.yaml
+
+  duckdb:
+    image: python:3.12-slim
+    command: sleep infinity
+    volumes:
+      - ./data:/data

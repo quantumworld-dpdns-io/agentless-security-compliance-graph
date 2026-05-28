@@ -1,0 +1,3 @@
+[workspace]
+members = ["native", "agentless"]
+resolver = "2"
