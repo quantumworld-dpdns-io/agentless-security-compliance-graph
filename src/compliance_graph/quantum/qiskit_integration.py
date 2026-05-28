@@ -12,20 +12,10 @@ class QiskitBackend:
         self.project = project
         self.backend = None
 
-    def get_backend(self, name: str = "ibmq_qasm_simulator"):
-        try:
-            from qiskit_ibm_runtime import QiskitRuntimeService
-            service = QiskitRuntimeService(hub=self.hub, group=self.group, project=self.project)
-            self.backend = service.backend(name)
-            return self.backend
-        except ImportError:
-            from qiskit_aer import AerSimulator
-            self.backend = AerSimulator()
-            return self.backend
-        except Exception:
-            from qiskit import BasicAer
-            self.backend = BasicAer.get_backend("qasm_simulator")
-            return self.backend
+    def get_backend(self):
+        from qiskit_aer import AerSimulator
+        self.backend = AerSimulator()
+        return self.backend
 
     def run_circuit(self, circuit, shots: int = 1024):
         if self.backend is None:
