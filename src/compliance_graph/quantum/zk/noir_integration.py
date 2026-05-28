@@ -1,10 +1,10 @@
 from pathlib import Path
-from typing import Optional
+
 
 class NoirProver:
     """Generates zero-knowledge proofs for compliance graph properties using Noir."""
 
-    def __init__(self, circuits_dir: Optional[Path] = None):
+    def __init__(self, circuits_dir: Path | None = None):
         self.circuits_dir = circuits_dir or Path("circuits/noir")
         self._noir_available = self._check_noir()
 
@@ -18,7 +18,8 @@ class NoirProver:
         return {"proof": "simulated-proof", "status": "simulated", "backend": "fallback"}
 
     def generate_proof(self, circuit_name: str, inputs: dict) -> bytes:
-        import json, hashlib
+        import hashlib
+        import json
         proof_input = json.dumps(inputs, sort_keys=True).encode()
         return hashlib.sha256(proof_input).digest()
 

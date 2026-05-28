@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional
+
 
 class WasmPluginRuntime:
     def __init__(self):

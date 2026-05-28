@@ -1,4 +1,5 @@
-from typing import Optional, Literal
+from typing import Literal
+
 
 class LLMProvider:
     """Abstract LLM provider interface."""
@@ -22,7 +23,7 @@ class LLMProvider:
             return OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
         return None
 
-    def chat(self, messages: list[dict], model: Optional[str] = None) -> str:
+    def chat(self, messages: list[dict], model: str | None = None) -> str:
         if self.provider in ("openai", "vllm"):
             response = self.client.chat.completions.create(model=model or "gpt-4", messages=messages)
             return response.choices[0].message.content

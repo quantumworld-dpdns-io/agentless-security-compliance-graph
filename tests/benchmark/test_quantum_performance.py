@@ -1,9 +1,10 @@
-import pytest
 import numpy as np
+
 from compliance_graph.quantum.classical_quantum_interface import HybridOrchestrator
 
+
 class TestQuantumPerformance:
-    
+
     def test_quantum_vs_classical_small(self, benchmark):
         orchestrator = HybridOrchestrator()
         data = np.random.rand(8, 8)

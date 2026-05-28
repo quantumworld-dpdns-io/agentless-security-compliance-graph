@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Depends
-from ..models import ComplianceGraph
-from ..services import CVEIngestionService, ScannerService, ReportService
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
+
+from ..models import ComplianceGraph
+from ..services import ReportService
 
 router = APIRouter()
 

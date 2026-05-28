@@ -1,10 +1,11 @@
-from typing import Optional
-from opentelemetry import trace, metrics
-from opentelemetry.sdk.trace import TracerProvider
+
+from opentelemetry import metrics, trace
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.resources import Resource
-from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
 
 class TelemetryService:
     """OpenTelemetry integration for compliance graph observability."""
@@ -12,8 +13,8 @@ class TelemetryService:
     def __init__(self, service_name: str = "compliance-graph", otel_endpoint: str = "http://localhost:4317"):
         self.service_name = service_name
         self.otel_endpoint = otel_endpoint
-        self.tracer: Optional[trace.Tracer] = None
-        self.meter: Optional[metrics.Meter] = None
+        self.tracer: trace.Tracer | None = None
+        self.meter: metrics.Meter | None = None
         self._initialize()
 
     def _initialize(self):
@@ -33,7 +34,7 @@ class TelemetryService:
         metrics.set_meter_provider(meter_provider)
         self.meter = metrics.get_meter(self.service_name)
 
-    def create_span(self, name: str, attributes: Optional[dict] = None):
+    def create_span(self, name: str, attributes: dict | None = None):
         if self.tracer:
             return self.tracer.start_as_current_span(name, attributes=attributes)
         from contextlib import nullcontext

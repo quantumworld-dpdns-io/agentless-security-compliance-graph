@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from .endpoints import router
 
 api_router = APIRouter(prefix="/api/v1")

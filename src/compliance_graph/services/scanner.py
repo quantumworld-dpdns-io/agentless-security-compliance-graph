@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional
+
 
 class ScannerService:
     def __init__(self, graph: "ComplianceGraph"):

@@ -1,6 +1,8 @@
-from typing import Any
-import yaml
 from pathlib import Path
+from typing import Any
+
+import yaml
+
 
 class PolicyEngine:
     def __init__(self, rules_dir: Optional[Path] = None):

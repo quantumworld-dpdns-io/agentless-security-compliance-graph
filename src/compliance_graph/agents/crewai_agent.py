@@ -1,4 +1,3 @@
-from typing import Optional
 
 class ComplianceCrew:
     """Multi-agent compliance scanning crew using CrewAI."""

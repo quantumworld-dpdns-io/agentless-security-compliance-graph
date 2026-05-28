@@ -1,6 +1,8 @@
 import pytest
-from httpx import AsyncClient, ASGITransport
+from httpx import ASGITransport, AsyncClient
+
 from compliance_graph.api.main import app
+
 
 @pytest.fixture
 def client():

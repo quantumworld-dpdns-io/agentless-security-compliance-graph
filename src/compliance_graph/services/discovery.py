@@ -1,6 +1,7 @@
 import asyncio
-from typing import Optional
+
 from ..models import ComplianceGraph
+
 
 class AgentlessDiscoveryService:
     """Agentless device and network discovery via passive techniques."""

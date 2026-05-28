@@ -1,7 +1,9 @@
 import pytest
+
 from compliance_graph.agents.langgraph_agent import ComplianceAnalyzer
-from compliance_graph.agents.mcp.server import MCPServer
 from compliance_graph.agents.llm import LLMProvider
+from compliance_graph.agents.mcp.server import MCPServer
+
 
 @pytest.mark.asyncio
 async def test_compliance_analyzer():

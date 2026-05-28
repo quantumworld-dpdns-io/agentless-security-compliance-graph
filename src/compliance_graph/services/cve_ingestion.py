@@ -1,7 +1,9 @@
-import httpx
 from datetime import datetime
-from typing import Optional
+
+import httpx
+
 from ..models import ComplianceGraph, CVENode
+
 
 class CVEIngestionService:
     NVD_API_BASE = "https://services.nvd.nist.gov/rest/json/cves/2.0"
@@ -35,7 +37,7 @@ class CVEIngestionService:
     def ingest_to_graph(self, cves: list[CVENode]) -> int:
         count = 0
         for cve in cves:
-            node_id = self.graph.add_node(
+            self.graph.add_node(
                 node_type="cve",
                 name=cve.cve_id,
                 attributes=cve.model_dump()

@@ -1,5 +1,7 @@
-from typing import Optional, Any
+from typing import Any
+
 import numpy as np
+
 
 class VectorStore:
     def __init__(self, backend: str = "chroma", collection_name: str = "compliance_embeddings"):
@@ -44,7 +46,7 @@ class VectorStore:
             rng = np.random.default_rng(hash(text) % (2**32))
             return rng.random(384).tolist()
 
-    def store_embedding(self, doc_id: str, text: str, metadata: Optional[dict] = None):
+    def store_embedding(self, doc_id: str, text: str, metadata: dict | None = None):
         embedding = self.embed_text(text)
         if self._client and self.backend == "chroma":
             try:

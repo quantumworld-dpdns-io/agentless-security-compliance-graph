@@ -12,11 +12,11 @@ class ToolRegistry:
         self._register_all()
 
     def _register_all(self):
-        @self.server.register_tool("query_graph", self._query_graph, "Query the compliance graph")
-        @self.server.register_tool("scan_device", self._scan_device, "Scan a device for compliance")
-        @self.server.register_tool("assess_compliance", self._assess_compliance, "Assess overall compliance posture")
-        @self.server.register_tool("generate_report", self._generate_report, "Generate a compliance report")
-        @self.server.register_tool("recent_cves", self._recent_cves, "Fetch recent CVE data")
+        self.server.register_tool("query_graph", self._query_graph, "Query the compliance graph")
+        self.server.register_tool("scan_device", self._scan_device, "Scan a device for compliance")
+        self.server.register_tool("assess_compliance", self._assess_compliance, "Assess overall compliance posture")
+        self.server.register_tool("generate_report", self._generate_report, "Generate a compliance report")
+        self.server.register_tool("recent_cves", self._recent_cves, "Fetch recent CVE data")
 
     async def _query_graph(self, **kwargs):
         return self.graph.get_compliance_summary()

@@ -1,5 +1,6 @@
-from typing import Optional, Any
 import json
+from typing import Any
+
 
 class RedisCache:
     def __init__(self, url: str = "redis://localhost:6379"):
@@ -17,7 +18,7 @@ class RedisCache:
             except ImportError:
                 return None
 
-    async def get(self, key: str) -> Optional[str]:
+    async def get(self, key: str) -> str | None:
         if self._client:
             return await self._client.get(f"cg:{key}")
         return None

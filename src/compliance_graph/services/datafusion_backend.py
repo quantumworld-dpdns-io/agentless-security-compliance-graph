@@ -1,4 +1,3 @@
-from typing import Optional
 
 class DataFusionBackend:
     """Apache DataFusion as alternative query engine."""

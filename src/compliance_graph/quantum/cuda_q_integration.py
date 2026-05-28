@@ -1,5 +1,5 @@
-from typing import Optional
 import numpy as np
+
 
 class CUDAQSimulator:
     """NVIDIA CUDA-Q quantum simulator for GPU-accelerated circuit simulation."""
@@ -28,7 +28,7 @@ class CUDAQSimulator:
         import cudaq
         @cudaq.kernel
         def kernel():
-            qubits = cudaq.qvector(circuit_def.get("n_qubits", 2))
+            cudaq.qvector(circuit_def.get("n_qubits", 2))
             for gate in circuit_def.get("gates", []):
                 getattr(cudaq, gate["name"])(*gate.get("params", []))
         return kernel

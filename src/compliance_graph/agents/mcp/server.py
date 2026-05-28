@@ -1,6 +1,6 @@
 import json
 import sys
-from typing import Any
+
 
 class MCPServer:
     """MCP (Model Context Protocol) server for compliance graph tools."""
@@ -20,7 +20,7 @@ class MCPServer:
     async def handle_request(self, request: dict) -> dict:
         method = request.get("method")
         params = request.get("params", {})
-        
+
         if method == "tools/list":
             return {"tools": [{"name": n, "description": d["description"]} for n, d in self.tools.items()]}
         elif method == "tools/call":

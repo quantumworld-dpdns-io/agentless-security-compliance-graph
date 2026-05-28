@@ -1,7 +1,8 @@
-from typing import Optional
 import numpy as np
-from .qiskit_integration import QuantumGraphSolver
+
 from .cuda_q_integration import HybridSolver
+from .qiskit_integration import QuantumGraphSolver
+
 
 class HybridOrchestrator:
     """Orchestrates between classical and quantum solvers based on problem characteristics."""
@@ -16,7 +17,7 @@ class HybridOrchestrator:
         n = data.shape[0]
         if n < self.quantum_threshold and not self.use_quantum:
             return self._classical_fallback(problem_type, data)
-        
+
         if problem_type == "max_cut":
             return self.qiskit_solver.solve_max_cut(data)
         elif problem_type == "risk_scoring":
@@ -37,17 +38,17 @@ class HybridOrchestrator:
         for n in problem_sizes:
             data = np.random.rand(n, n)
             data = (data + data.T) / 2
-            
+
             start = time.perf_counter()
-            quantum = self.solve_graph_problem("max_cut", data)
+            self.solve_graph_problem("max_cut", data)
             q_time = time.perf_counter() - start
-            
+
             self.use_quantum = False
             start = time.perf_counter()
-            classical = self._classical_fallback("max_cut", data)
+            self._classical_fallback("max_cut", data)
             c_time = time.perf_counter() - start
             self.use_quantum = True
-            
+
             results[n] = {
                 "quantum_time": q_time,
                 "classical_time": c_time,

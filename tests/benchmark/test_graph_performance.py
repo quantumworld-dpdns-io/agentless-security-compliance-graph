@@ -1,9 +1,10 @@
 import pytest
-import numpy as np
+
 from compliance_graph.models import ComplianceGraph
 
+
 class TestGraphPerformance:
-    
+
     @pytest.fixture(autouse=True)
     def setup(self, tmp_path):
         self.graph = ComplianceGraph(str(tmp_path / "bench.db"))

@@ -1,9 +1,10 @@
-from typing import Optional
+
 import numpy as np
+
 
 class QiskitBackend:
     """Abstraction over Qiskit backends — real hardware or simulator."""
-    
+
     def __init__(self, use_hardware: bool = False, hub: str = "ibm-q", group: str = "open", project: str = "main"):
         self.use_hardware = use_hardware
         self.hub = hub
@@ -27,16 +28,24 @@ class QiskitBackend:
             return self.backend
 
     def run_circuit(self, circuit, shots: int = 1024):
-        from qiskit import execute
         if self.backend is None:
             self.get_backend()
-        return execute(circuit, self.backend, shots=shots).result()
+        try:
+            from qiskit_aer import AerSimulator
+            backend = AerSimulator()
+            job = backend.run(circuit, shots=shots)
+            return job.result()
+        except ImportError:
+            from qiskit import BasicAer
+            backend = BasicAer.get_backend("qasm_simulator")
+            job = backend.run(circuit, shots=shots)
+            return job.result()
 
 
 class QuantumGraphSolver:
     """Solves compliance graph optimization problems using quantum algorithms."""
 
-    def __init__(self, backend: Optional[QiskitBackend] = None):
+    def __init__(self, backend: QiskitBackend | None = None):
         self.backend = backend or QiskitBackend()
 
     def build_qaoa_circuit(self, adjacency_matrix: np.ndarray, p: int = 1):
@@ -56,11 +65,11 @@ class QuantumGraphSolver:
 
     def solve_max_cut(self, adjacency_matrix: np.ndarray) -> dict:
         try:
-            from qiskit_optimization.applications import Maxcut
-            from qiskit_optimization.algorithms import MinimumEigenOptimizer
             from qiskit_algorithms import QAOA
             from qiskit_algorithms.optimizers import COBYLA
-            
+            from qiskit_optimization.algorithms import MinimumEigenOptimizer
+            from qiskit_optimization.applications import Maxcut
+
             maxcut = Maxcut(adjacency_matrix)
             qp = maxcut.to_quadratic_program()
             qaoa = QAOA(optimizer=COBYLA(), reps=1)
@@ -85,10 +94,10 @@ class QuantumGraphSolver:
 
     def solve_vqe_risk_scoring(self, risk_matrix: np.ndarray) -> dict:
         try:
+            from qiskit.circuit.library import TwoLocal
             from qiskit_algorithms import VQE
             from qiskit_algorithms.optimizers import SLSQP
-            from qiskit.circuit.library import TwoLocal
-            
+
             ansatz = TwoLocal(risk_matrix.shape[0], "ry", "cz", reps=3)
             vqe = VQE(ansatz=ansatz, optimizer=SLSQP())
             result = vqe.compute_minimum_eigenvalue(risk_matrix)

@@ -1,27 +1,29 @@
-from typing import TypedDict, Literal, Optional
+from typing import TypedDict
+
 from ..models import ComplianceGraph
 from ..services.policy_engine import PolicyEngine
 
+
 class AgentState(TypedDict):
     query: str
-    graph_data: Optional[dict]
-    analysis_result: Optional[dict]
+    graph_data: dict | None
+    analysis_result: dict | None
     policy_violations: list[dict]
     recommendations: list[str]
     status: str
 
 def create_compliance_graph():
     try:
-        from langgraph.graph import StateGraph, END
+        from langgraph.graph import END, StateGraph
         workflow = StateGraph(AgentState)
 
-        async def fetch_graph_data(state: AgentState) -> AgentState:
+        async def fetch_graph_data(state: AgentState):
             graph = ComplianceGraph()
             state["graph_data"] = graph.get_compliance_summary()
             graph.close()
             return state
 
-        async def analyze_compliance(state: AgentState) -> AgentState:
+        async def analyze_compliance(state: AgentState):
             engine = PolicyEngine()
             violations = []
             if state.get("graph_data"):
@@ -32,7 +34,7 @@ def create_compliance_graph():
             state["status"] = "analyzed"
             return state
 
-        async def generate_recommendations(state: AgentState) -> AgentState:
+        async def generate_recommendations(state: AgentState):
             state["recommendations"] = []
             for v in state.get("policy_violations", []):
                 state["recommendations"].append(
@@ -41,12 +43,12 @@ def create_compliance_graph():
             state["status"] = "complete"
             return state
 
-        def should_continue(state: AgentState) -> Literal["analyze", "recommend", "end"]:
+        def should_continue(state: AgentState):
             if state["status"] == "pending":
                 return "analyze"
             elif state["status"] == "analyzed":
                 return "recommend"
-            return "end"
+            return END
 
         workflow.add_node("fetch_data", fetch_graph_data)
         workflow.add_node("analyze", analyze_compliance)
@@ -55,7 +57,6 @@ def create_compliance_graph():
         workflow.add_conditional_edges("fetch_data", should_continue)
         workflow.add_conditional_edges("analyze", should_continue)
         workflow.add_edge("recommend", END)
-        workflow.set_finish_point("recommend")
 
         return workflow.compile()
     except ImportError:

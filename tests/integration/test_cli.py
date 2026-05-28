@@ -1,6 +1,7 @@
 import subprocess
 import sys
 
+
 def test_cli_help():
     result = subprocess.run([sys.executable, "-m", "compliance_graph", "--help"],
                           capture_output=True, text=True)

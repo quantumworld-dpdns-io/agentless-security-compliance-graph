@@ -1,8 +1,9 @@
 import click
 from rich.console import Console
 from rich.table import Table
+
 from ..models import ComplianceGraph
-from ..services import CVEIngestionService, ScannerService, ReportService
+from ..services import CVEIngestionService, ReportService, ScannerService
 
 console = Console()
 graph = ComplianceGraph()

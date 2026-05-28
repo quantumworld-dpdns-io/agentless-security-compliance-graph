@@ -1,5 +1,5 @@
-from typing import Optional, Any
 import duckdb
+
 
 class DuckDBGraphExtension:
     """Advanced DuckDB graph query extensions for compliance analysis."""

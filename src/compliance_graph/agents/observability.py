@@ -1,4 +1,3 @@
-from typing import Optional
 
 class LangSmithTracer:
     """LangSmith tracing for AI agent calls."""

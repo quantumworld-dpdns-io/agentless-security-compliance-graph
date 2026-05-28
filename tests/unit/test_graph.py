@@ -1,8 +1,10 @@
 """Unit tests for the compliance graph data model."""
 
+
 import pytest
+
 from compliance_graph.models import ComplianceGraph
-import uuid
+
 
 @pytest.fixture
 def graph(tmp_path):
@@ -38,7 +40,7 @@ def test_bfs_traversal(graph):
     n3 = graph.add_node("device", "workstation-01")
     graph.add_edge(n1, n2, "ROUTES_TO")
     graph.add_edge(n2, n3, "ROUTES_TO")
-    nodes = graph.bfs_traverse(n1, depth=5)
+    nodes = graph.bfs_traverse(n1, max_depth=5)
     assert len(nodes) >= 2
 
 def test_shortest_path(graph):

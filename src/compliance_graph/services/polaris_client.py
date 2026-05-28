@@ -1,5 +1,6 @@
+
 import httpx
-from typing import Optional
+
 
 class PolarisCatalogClient:
     """Apache Polaris Iceberg REST catalog client."""
@@ -21,7 +22,7 @@ class PolarisCatalogClient:
 
     def health(self) -> dict:
         try:
-            response = self.client.get("/api/management/v1/health")
+            self.client.get("/api/management/v1/health")
             return {"status": "healthy", "polaris": True}
         except Exception:
             return {"status": "unreachable", "polaris": False}

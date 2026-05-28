@@ -1,4 +1,3 @@
-from typing import Optional
 
 class RiscZeroProver:
     """Generates zero-knowledge proofs using RISC Zero zkVM."""
@@ -18,7 +17,8 @@ class RiscZeroProver:
             import risc0
             receipt = risc0.Prover().prove(program_code, inputs)
             return {"receipt": str(receipt), "status": "proved"}
-        import json, hashlib
+        import hashlib
+        import json
         receipt = hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
         return {"receipt": receipt, "status": "simulated"}
 

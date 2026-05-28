@@ -1,4 +1,4 @@
-from typing import Optional
+
 
 class IcebergCatalog:
     """Apache Iceberg catalog integration for compliance data lakehouse."""
@@ -29,7 +29,7 @@ class IcebergCatalog:
         except Exception:
             return False
 
-    def query_snapshot(self, table_name: str, snapshot_id: Optional[int] = None) -> list[dict]:
+    def query_snapshot(self, table_name: str, snapshot_id: int | None = None) -> list[dict]:
         return [
             {"snapshot_id": snapshot_id or 1, "table": table_name, "rows": 100}
         ]

@@ -1,4 +1,3 @@
-from typing import Optional
 
 class FederatedLearningClient:
     def __init__(self, server_url: str = "http://localhost:9090"):

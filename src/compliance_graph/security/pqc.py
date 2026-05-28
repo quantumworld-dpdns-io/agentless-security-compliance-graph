@@ -1,4 +1,3 @@
-from typing import Optional
 
 class PQCService:
     def __init__(self):

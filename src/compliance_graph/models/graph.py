@@ -1,5 +1,6 @@
-from typing import Optional
+
 import duckdb
+
 
 class ComplianceGraph:
     def __init__(self, database_url: str = "compliance_graph.db"):
@@ -33,7 +34,7 @@ class ComplianceGraph:
             CREATE INDEX IF NOT EXISTS idx_edges_type ON edges(edge_type);
         """)
 
-    def add_node(self, node_type: str, name: str, attributes: Optional[dict] = None) -> str:
+    def add_node(self, node_type: str, name: str, attributes: dict | None = None) -> str:
         import uuid
         node_id = str(uuid.uuid4())
         self.conn.execute(
@@ -42,7 +43,7 @@ class ComplianceGraph:
         )
         return node_id
 
-    def add_edge(self, source_id: str, target_id: str, edge_type: str, weight: float = 1.0, metadata: Optional[dict] = None) -> str:
+    def add_edge(self, source_id: str, target_id: str, edge_type: str, weight: float = 1.0, metadata: dict | None = None) -> str:
         import uuid
         edge_id = str(uuid.uuid4())
         self.conn.execute(

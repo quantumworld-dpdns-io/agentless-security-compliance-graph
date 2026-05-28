@@ -1,7 +1,8 @@
-import pytest
 import numpy as np
-from compliance_graph.quantum.qiskit_integration import QuantumGraphSolver, QiskitBackend
+
 from compliance_graph.quantum.classical_quantum_interface import HybridOrchestrator
+from compliance_graph.quantum.qiskit_integration import QiskitBackend, QuantumGraphSolver
+
 
 def test_qiskit_backend_initialization():
     backend = QiskitBackend()
