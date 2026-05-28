@@ -368,3 +368,9 @@ Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) before opening a pull reques
 - [x] Phase 8: Security & Robot Framework Tests
 - [x] Phase 9: CI/CD, Releases & Packaging
 - [x] Phase 10: Production Hardening & Documentation
+
+
+
+<img width="916" height="213" alt="Screenshot 2026-05-28 at 3 46 28 PM" src="https://github.com/user-attachments/assets/de0fa601-aeb0-4501-a056-81d02d036ebb" />
+<img width="1819" height="103" alt="Screenshot 2026-05-28 at 3 46 41 PM" src="https://github.com/user-attachments/assets/2740b6e6-ce9d-42a5-ba6b-4eef9826d67c" />
+
